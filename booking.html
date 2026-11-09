@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<a href="#main" class="skip-link">Skip to content</a>
+
 <!-- ============ LOADING SCREEN ============ -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader__mark">
@@ -35,6 +37,9 @@
     <button class="compare-dock__clear" id="clearCompareBtn" aria-label="Clear comparison list">Clear</button>
   </div>
 </div>
+
+<!-- ============ MOBILE MENU BACKDROP ============ -->
+<div class="nav__backdrop" id="navBackdrop" aria-hidden="true"></div>
 
 <!-- ============ NAVIGATION ============ -->
 <header class="nav" id="siteNav">
@@ -58,63 +63,74 @@
         <span class="icon-btn__count" id="favCount">0</span>
       </button>
       <button class="btn btn--brass btn--sm" id="listPropertyBtn">List a Property</button>
-      <button class="nav__burger" id="navBurger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <button class="nav__burger" id="navBurger"
+              aria-label="Open menu"
+              aria-expanded="false"
+              aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- ============ BOOKING PAGE ============ -->
-<section class="sectionBooking" id="booking">
-  <div class="booking__copy" data-reveal>
-    <p class="eyebrow">By Appointment Only</p>
-    <h2>Book a Private Viewing</h2>
-    <p>Tell us when suits you. A partner from the desk will confirm within one business day — every viewing is accompanied, never a lockbox.</p>
-    <ul class="booking__list">
-      <li>Available seven days a week, by appointment</li>
-      <li>Video walkthroughs available on request</li>
-      <li>NDA provided for off-market residences</li>
-    </ul>
-  </div>
+<main id="main">
 
-  <form class="booking__form" id="bookingForm" novalidate data-reveal>
-    <input type="hidden" id="bookingProperty" name="property">
-    <p class="booking__form-selected" id="bookingSelectedLabel">General enquiry — no residence selected</p>
+  <!-- ============ BOOKING PAGE ============ -->
+  <section class="sectionBooking" id="booking">
+    <div class="booking">
+      <div class="booking__copy" data-reveal>
+        <p class="eyebrow">By Appointment Only</p>
+        <h2>Book a Private Viewing</h2>
+        <p>Tell us when suits you. A partner from the desk will confirm within one business day — every viewing is accompanied, never a lockbox.</p>
+        <ul class="booking__list">
+          <li>Available seven days a week, by appointment</li>
+          <li>Video walkthroughs available on request</li>
+          <li>NDA provided for off-market residences</li>
+        </ul>
+      </div>
 
-    <div class="form-grid">
-      <div class="field">
-        <label for="bkName">Full name</label>
-        <input type="text" id="bkName" required placeholder="Jordan Ellis">
-        <span class="field__error" data-error-for="bkName"></span>
-      </div>
-      <div class="field">
-        <label for="bkEmail">Email</label>
-        <input type="email" id="bkEmail" required placeholder="jordan@email.com">
-        <span class="field__error" data-error-for="bkEmail"></span>
-      </div>
-      <div class="field">
-        <label for="bkPhone">Phone</label>
-        <input type="tel" id="bkPhone" required placeholder="+1 (555) 000-0000">
-        <span class="field__error" data-error-for="bkPhone"></span>
-      </div>
-      <div class="field">
-        <label for="bkDate">Preferred date</label>
-        <input type="date" id="bkDate" required>
-        <span class="field__error" data-error-for="bkDate"></span>
-      </div>
-      <div class="field">
-        <label for="bkTime">Preferred time</label>
-        <input type="time" id="bkTime" required>
-        <span class="field__error" data-error-for="bkTime"></span>
-      </div>
-      <div class="field field--full">
-        <label for="bkMessage">Message</label>
-        <textarea id="bkMessage" rows="3" placeholder="Anything we should know before the viewing?"></textarea>
-      </div>
+      <form class="booking__form" id="bookingForm" novalidate data-reveal>
+        <input type="hidden" id="bookingProperty" name="property">
+        <p class="booking__form-selected" id="bookingSelectedLabel">General enquiry — no residence selected</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="bkName">Full name</label>
+            <input type="text" id="bkName" required placeholder="Jordan Ellis">
+            <span class="field__error" data-error-for="bkName"></span>
+          </div>
+          <div class="field">
+            <label for="bkEmail">Email</label>
+            <input type="email" id="bkEmail" required placeholder="jordan@email.com">
+            <span class="field__error" data-error-for="bkEmail"></span>
+          </div>
+          <div class="field">
+            <label for="bkPhone">Phone</label>
+            <input type="tel" id="bkPhone" required placeholder="+1 (555) 000-0000">
+            <span class="field__error" data-error-for="bkPhone"></span>
+          </div>
+          <div class="field">
+            <label for="bkDate">Preferred date</label>
+            <input type="date" id="bkDate" required>
+            <span class="field__error" data-error-for="bkDate"></span>
+          </div>
+          <div class="field">
+            <label for="bkTime">Preferred time</label>
+            <input type="time" id="bkTime" required>
+            <span class="field__error" data-error-for="bkTime"></span>
+          </div>
+          <div class="field field--full">
+            <label for="bkMessage">Message</label>
+            <textarea id="bkMessage" rows="3" placeholder="Anything we should know before the viewing?"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--brass btn--wide">Request Viewing</button>
+      </form>
     </div>
+  </section>
 
-    <button type="submit" class="btn btn--brass btn--wide">Request Viewing</button>
-  </form>
-</section>
+</main>
 
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
