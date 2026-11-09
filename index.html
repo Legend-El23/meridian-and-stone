@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian &amp; Stone — Architecture, Uncommonly Placed</title>
+<meta name="description" content="Meridian & Stone is a private real estate house representing the world's most considered residences.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ LOADING SCREEN ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">
+    <span class="loader__ring"></span>
+    <span class="loader__glyph">M&amp;S</span>
+  </div>
+  <p class="loader__text">Meridian &amp; Stone</p>
+</div>
+
+<!-- ============ TOAST CONTAINER ============ -->
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<!-- ============ COMPARE DOCK ============ -->
+<div class="compare-dock" id="compareDock">
+  <div class="compare-dock__inner">
+    <span class="compare-dock__label">Compare <strong id="compareCount">0</strong>/3</span>
+    <div class="compare-dock__slots" id="compareSlots"></div>
+    <button class="btn btn--ghost btn--sm" id="openCompareBtn">View comparison</button>
+    <button class="compare-dock__clear" id="clearCompareBtn" aria-label="Clear comparison list">Clear</button>
+  </div>
+</div>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" id="siteNav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <span class="nav__mark">M&amp;S</span>
+      <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="listings.html" class="nav__link">Residences</a>
+      <a href="agents.html" class="nav__link">Agents</a>
+      <a href="about.html" class="nav__link">The House</a>
+      <a href="journal.html" class="nav__link">Journal</a>
+      <a href="contact.html" class="nav__link">Contact</a>
+    </nav>
+
+    <div class="nav__actions">
+      <button class="icon-btn" id="favToggleBtn" title="View saved residences" aria-label="Saved residences">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.4 8.4 2 5 5.4 5c2 0 3.4 1 4.6 2.6C11.2 6 12.6 5 14.6 5 18 5 19.6 8.4 18 11.8 15.5 16.4 8 21 8 21z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span class="icon-btn__count" id="favCount">0</span>
+      </button>
+      <button class="btn btn--brass btn--sm" id="listPropertyBtn">List a Property</button>
+      <button class="nav__burger" id="navBurger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero__media">
+    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2400&auto=format&fit=crop" alt="" class="hero__img" id="heroImg">
+    <div class="hero__overlay"></div>
+  </div>
+  <div class="hero__grain"></div>
+  <div class="hero__content">
+    <p class="eyebrow hero__eyebrow" data-reveal>Est. 1998 — Private Brokerage</p>
+    <h1 class="hero__title" data-reveal>
+      Architecture,<br><em>uncommonly</em> placed.
+    </h1>
+    <p class="hero__sub" data-reveal>
+      A quiet collection of houses, land and coastline — represented, not merely listed.
+    </p>
+    <div class="hero__ctas" data-reveal>
+      <a href="listings.html" class="btn btn--brass">View Residences</a>
+      <a href="booking.html" class="btn btn--ghost-light">Book a Private Viewing</a>
+    </div>
+  </div>
+  <a href="listings.html" class="hero__scroll" aria-label="View residences">
+    <span></span> View Residences
+  </a>
+</section>
+
+<!-- ============ STATS STRIP ============ -->
+<section class="stats" id="stats">
+  <div class="stats__inner">
+    <div class="stat">
+      <span class="stat__num" data-count="27">0</span><span class="stat__suffix">yrs</span>
+      <p>In private brokerage</p>
+    </div>
+    <div class="stat">
+      <span class="stat__num" data-count="612">0</span><span class="stat__suffix">+</span>
+      <p>Residences closed</p>
+    </div>
+    <div class="stat">
+      <span class="stat__num" data-count="4.8" data-decimal="1">0</span><span class="stat__suffix">B</span>
+      <p>In transaction value (USD)</p>
+    </div>
+    <div class="stat">
+      <span class="stat__num" data-count="98">0</span><span class="stat__suffix">%</span>
+      <p>Client referral rate</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED PROPERTIES ============ -->
+<section class="section" id="featured">
+  <div class="section__head" data-reveal>
+    <p class="eyebrow">Curated This Season</p>
+    <h2>Featured Residences</h2>
+  </div>
+  <div class="feature-grid" id="featuredGrid"></div>
+  <div class="section__foot" data-reveal>
+    <a href="listings.html" class="btn btn--outline">View All Residences</a>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter">
+  <div class="newsletter__inner" data-reveal>
+    <div>
+      <p class="eyebrow">The Quiet List</p>
+      <h2>Off-market residences, before anyone else sees them.</h2>
+    </div>
+    <form class="newsletter__form" id="newsletterForm" novalidate>
+      <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+      <button type="submit" class="btn btn--brass">Subscribe</button>
+      <span class="field__error" data-error-for="newsletterEmail"></span>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <span class="nav__mark">M&amp;S</span>
+      <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
+      <p>A private real estate house. By appointment, always.</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h4>Navigate</h4>
+        <a href="listings.html">Residences</a>
+        <a href="agents.html">Agents</a>
+        <a href="about.html">The House</a>
+        <a href="journal.html">Journal</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="booking.html">Private Viewings</a>
+        <a href="upload.html">List a Property</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Fair Housing</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>&copy; <span id="year"></span> Meridian &amp; Stone Real Estate. All rights reserved.</p>
+    <p>Demo site — built for illustration only.</p>
+  </div>
+</footer>
+
+<!-- ============ BACK TO TOP ============ -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- ============ PROPERTY DETAIL MODAL ============ -->
+<div class="modal" id="propertyModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel modal__panel--property" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+    <div class="modal__body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ============ COMPARE MODAL ============ -->
+<div class="modal" id="compareModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel modal__panel--compare" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+    <h3 id="compareTitle">Compare Residences</h3>
+    <div class="compare-table-wrap">
+      <table class="compare-table" id="compareTable"></table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FAVORITES MODAL ============ -->
+<div class="modal" id="favModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel modal__panel--fav" role="dialog" aria-modal="true" aria-labelledby="favTitle">
+    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+    <h3 id="favTitle">Saved Residences</h3>
+    <div class="fav-grid" id="favGrid"></div>
+    <p class="fav-empty" id="favEmpty" hidden>Nothing saved yet — tap the heart on any residence to keep it here.</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

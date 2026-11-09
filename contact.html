@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Meridian &amp; Stone</title>
+<meta name="description" content="Get in touch with Meridian & Stone for your luxury real estate needs.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ LOADING SCREEN ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">
+    <span class="loader__ring"></span>
+    <span class="loader__glyph">M&amp;S</span>
+  </div>
+  <p class="loader__text">Meridian &amp; Stone</p>
+</div>
+
+<!-- ============ TOAST CONTAINER ============ -->
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<!-- ============ COMPARE DOCK ============ -->
+<div class="compare-dock" id="compareDock">
+  <div class="compare-dock__inner">
+    <span class="compare-dock__label">Compare <strong id="compareCount">0</strong>/3</span>
+    <div class="compare-dock__slots" id="compareSlots"></div>
+    <button class="btn btn--ghost btn--sm" id="openCompareBtn">View comparison</button>
+    <button class="compare-dock__clear" id="clearCompareBtn" aria-label="Clear comparison list">Clear</button>
+  </div>
+</div>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" id="siteNav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">
+      <span class="nav__mark">M&amp;S</span>
+      <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="listings.html" class="nav__link">Residences</a>
+      <a href="agents.html" class="nav__link">Agents</a>
+      <a href="about.html" class="nav__link">The House</a>
+      <a href="journal.html" class="nav__link">Journal</a>
+      <a href="contact.html" class="nav__link active">Contact</a>
+    </nav>
+
+    <div class="nav__actions">
+      <button class="icon-btn" id="favToggleBtn" title="View saved residences" aria-label="Saved residences">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.4 8.4 2 5 5.4 5c2 0 3.4 1 4.6 2.6C11.2 6 12.6 5 14.6 5 18 5 19.6 8.4 18 11.8 15.5 16.4 8 21 8 21z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span class="icon-btn__count" id="favCount">0</span>
+      </button>
+      <button class="btn btn--brass btn--sm" id="listPropertyBtn">List a Property</button>
+      <button class="nav__burger" id="navBurger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ CONTACT PAGE ============ -->
+<section class="sectionContact" id="contact">
+  <div class="section__head" data-reveal>
+    <p class="eyebrow">Reach The Desk</p>
+    <h2>Get In Touch</h2>
+  </div>
+
+  <div class="contact__grid">
+    <form class="contact__form" id="contactForm" novalidate data-reveal>
+      <div class="form-grid">
+        <div class="field">
+          <label for="cName">Name</label>
+          <input type="text" id="cName" required placeholder="Your name">
+          <span class="field__error" data-error-for="cName"></span>
+        </div>
+        <div class="field">
+          <label for="cEmail">Email</label>
+          <input type="email" id="cEmail" required placeholder="you@email.com">
+          <span class="field__error" data-error-for="cEmail"></span>
+        </div>
+        <div class="field field--full">
+          <label for="cSubject">Subject</label>
+          <input type="text" id="cSubject" placeholder="What's this about?">
+        </div>
+        <div class="field field--full">
+          <label for="cMessage">Message</label>
+          <textarea id="cMessage" rows="4" required placeholder="How can we help?"></textarea>
+          <span class="field__error" data-error-for="cMessage"></span>
+        </div>
+      </div>
+      <button type="submit" class="btn btn--brass btn--wide">Send Message</button>
+    </form>
+
+    <div class="contact__side" data-reveal>
+      <div class="contact__card">
+        <h3>Visit the desk</h3>
+        <p>412 Marchmont Row<br>Los Angeles, CA 90024</p>
+        <p>Monday – Saturday, by appointment</p>
+      </div>
+      <div class="contact__socials">
+        <a href="mailto:desk@meridianandstone.com" class="social-btn social-btn--email" aria-label="Email us">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.2.5 7.8 6.2L19.8 6H4.2Z"/></svg>
+          <span>Email</span>
+        </a>
+        <a href="https://wa.me/15550000000" target="_blank" rel="noopener" class="social-btn social-btn--whatsapp" aria-label="Message us on WhatsApp">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.9c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.7-.3-1.4-.7-2-1.3-.5-.5-1-1.1-1.4-1.8-.1-.2 0-.4.1-.5.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.3-.2-.5-.3Z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+        <a href="https://snapchat.com/add/meridianstone" target="_blank" rel="noopener" class="social-btn social-btn--snap" aria-label="Add us on Snapchat">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c3 0 4.8 2.1 5 4.8.1 1 .1 2.1.2 2.9.1.2.3.3.6.4.4.2 1.6.6 1.9.8.2.1.2.4 0 .6-.3.4-1 .7-1.7.9-.2.1-.3.2-.2.4.2.6.6 1.6 1.6 2 .3.1.3.4 0 .5-.5.2-1.2.3-1.6.4-.2 0-.3.2-.3.4 0 .3-.1.7-.3.9-.3.3-1.2.1-2 .3-.7.2-1.1.9-2.7.9s-2-.7-2.7-.9c-.8-.2-1.7 0-2-.3-.2-.2-.3-.6-.3-.9 0-.2-.1-.4-.3-.4-.4-.1-1.1-.2-1.6-.4-.3-.1-.3-.4 0-.5 1-.4 1.4-1.4 1.6-2 .1-.2 0-.3-.2-.4-.7-.2-1.4-.5-1.7-.9-.2-.2-.2-.5 0-.6.3-.2 1.5-.6 1.9-.8.3-.1.5-.2.6-.4.1-.8.1-1.9.2-2.9C7.2 4.1 9 2 12 2Z"/></svg>
+          <span>Snapchat</span>
+        </a>
+        <a href="https://instagram.com/meridianandstone" target="_blank" rel="noopener" class="social-btn social-btn--insta" aria-label="Follow us on Instagram">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c2.7 0 3 0 4.1.1 1.1 0 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1.1.4 2.2.1 1.1.1 1.4.1 4.1s0 3-.1 4.1c0 1.1-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1.1.3-2.2.4-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1.1 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1.1-.4-2.2-.1-1.1-.1-1.4-.1-4.1s0-3 .1-4.1c0-1.1.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1.1-.3 2.2-.4 1.1-.1 1.4-.1 4.1-.1ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm5.2-8.4a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Z"/></svg>
+          <span>Instagram</span>
+        </a>
+        <a href="https://x.com/meridianandstone" target="_blank" rel="noopener" class="social-btn social-btn--x" aria-label="Follow us on X">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 3h4.4l4 5.6L16 3h4.6l-6.6 8.4L21 21h-4.4l-4.4-6.1L6.8 21H2.2l7-8.9L3 3Z"/></svg>
+          <span>X</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <span class="nav__mark">M&amp;S</span>
+      <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
+      <p>A private real estate house. By appointment, always.</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h4>Navigate</h4>
+        <a href="listings.html">Residences</a>
+        <a href="agents.html">Agents</a>
+        <a href="about.html">The House</a>
+        <a href="journal.html">Journal</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="booking.html">Private Viewings</a>
+        <a href="upload.html">List a Property</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Fair Housing</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>&copy; <span id="year"></span> Meridian &amp; Stone Real Estate. All rights reserved.</p>
+    <p>Demo site — built for illustration only.</p>
+  </div>
+</footer>
+
+<!-- ============ BACK TO TOP ============ -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- ============ PROPERTY DETAIL MODAL ============ -->
+<div class="modal" id="propertyModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel modal__panel--property" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+    <div class="modal__body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ============ COMPARE MODAL ============ -->
+<div class="modal" id="compareModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel modal__panel--compare" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+    <h3 id="compareTitle">Compare Residences</h3>
+    <div class="compare-table-wrap">
+      <table class="compare-table" id="compareTable"></table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FAVORITES MODAL ============ -->
+<div class="modal" id="favModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel modal__panel--fav" role="dialog" aria-modal="true" aria-labelledby="favTitle">
+    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+    <h3 id="favTitle">Saved Residences</h3>
+    <div class="fav-grid" id="favGrid"></div>
+    <p class="fav-empty" id="favEmpty" hidden>Nothing saved yet — tap the heart on any residence to keep it here.</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

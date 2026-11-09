@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List a Property — Meridian &amp; Stone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== NAVIGATION (Copy from above) ===== -->
+
+<!-- ============ UPLOAD PAGE ============ -->
+<section class="section--stone" id="upload">
+  <div class="section__head" data-reveal>
+    <p class="eyebrow">For Owners &amp; Partner Agents</p>
+    <h2>List a Property</h2>
+    <p class="section__lede">Front-end demonstration only — submissions are added to this session's collection and are not sent anywhere.</p>
+  </div>
+
+  <form class="upload-form" id="uploadForm" novalidate data-reveal>
+    <div class="form-grid">
+      <div class="field">
+        <label for="upTitle">Property name</label>
+        <input type="text" id="upTitle" required placeholder="e.g. The Glasshouse">
+        <span class="field__error" data-error-for="upTitle"></span>
+      </div>
+      <div class="field">
+        <label for="upLocation">Location</label>
+        <input type="text" id="upLocation" required placeholder="City, Country">
+        <span class="field__error" data-error-for="upLocation"></span>
+      </div>
+      <div class="field">
+        <label for="upType">Type</label>
+        <select id="upType" required>
+          <option value="">Select type</option>
+          <option value="villa">Villa</option>
+          <option value="penthouse">Penthouse</option>
+          <option value="estate">Estate</option>
+          <option value="cabin">Retreat / Cabin</option>
+          <option value="apartment">Residence</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="upPrice">Asking price (USD)</label>
+        <input type="number" id="upPrice" required min="0" step="1000" placeholder="4500000">
+        <span class="field__error" data-error-for="upPrice"></span>
+      </div>
+      <div class="field">
+        <label for="upBeds">Bedrooms</label>
+        <input type="number" id="upBeds" min="0" max="20" value="3">
+      </div>
+      <div class="field">
+        <label for="upBaths">Bathrooms</label>
+        <input type="number" id="upBaths" min="0" max="20" value="2">
+      </div>
+      <div class="field">
+        <label for="upSize">Size (sq ft)</label>
+        <input type="number" id="upSize" min="0" step="10" placeholder="3200">
+      </div>
+      <div class="field">
+        <label for="upContact">Owner contact email</label>
+        <input type="email" id="upContact" required placeholder="you@email.com">
+        <span class="field__error" data-error-for="upContact"></span>
+      </div>
+      <div class="field field--full">
+        <label for="upDesc">Description</label>
+        <textarea id="upDesc" rows="3" placeholder="What makes this residence worth representing?"></textarea>
+      </div>
+      <div class="field field--full">
+        <label for="upImages">Photos</label>
+        <input type="file" id="upImages" accept="image/*" multiple>
+        <div class="upload-preview" id="uploadPreview"></div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn--brass btn--wide">Submit for Review</button>
+  </form>
+</section>
+
+<!-- ===== FOOTER (Copy from above) ===== -->
+
+<script src="script.js"></script>
+</body>
+</html>
