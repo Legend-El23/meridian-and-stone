@@ -1,210 +1,354 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book a Viewing — Meridian &amp; Stone</title>
-<meta name="description" content="Schedule a private viewing of our luxury residences.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book a Viewing — Meridian &amp; Stone</title>
+    <meta
+      name="description"
+      content="Schedule a private viewing of our luxury residences."
+    />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
 
-<a href="#main" class="skip-link">Skip to content</a>
-
-<!-- ============ LOADING SCREEN ============ -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader__mark">
-    <span class="loader__ring"></span>
-    <span class="loader__glyph">M&amp;S</span>
-  </div>
-  <p class="loader__text">Meridian &amp; Stone</p>
-</div>
-
-<!-- ============ TOAST CONTAINER ============ -->
-<div class="toast-stack" id="toastStack" aria-live="polite"></div>
-
-<!-- ============ COMPARE DOCK ============ -->
-<div class="compare-dock" id="compareDock">
-  <div class="compare-dock__inner">
-    <span class="compare-dock__label">Compare <strong id="compareCount">0</strong>/3</span>
-    <div class="compare-dock__slots" id="compareSlots"></div>
-    <button class="btn btn--ghost btn--sm" id="openCompareBtn">View comparison</button>
-    <button class="compare-dock__clear" id="clearCompareBtn" aria-label="Clear comparison list">Clear</button>
-  </div>
-</div>
-
-<!-- ============ MOBILE MENU BACKDROP ============ -->
-<div class="nav__backdrop" id="navBackdrop" aria-hidden="true"></div>
-
-<!-- ============ NAVIGATION ============ -->
-<header class="nav" id="siteNav">
-  <div class="nav__inner">
-    <a href="index.html" class="nav__brand">
-      <span class="nav__mark">M&amp;S</span>
-      <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
-    </a>
-
-    <nav class="nav__links" id="navLinks">
-      <a href="listings.html" class="nav__link">Residences</a>
-      <a href="agents.html" class="nav__link">Agents</a>
-      <a href="about.html" class="nav__link">The House</a>
-      <a href="journal.html" class="nav__link">Journal</a>
-      <a href="contact.html" class="nav__link">Contact</a>
-    </nav>
-
-    <div class="nav__actions">
-      <button class="icon-btn" id="favToggleBtn" title="View saved residences" aria-label="Saved residences">
-        <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.4 8.4 2 5 5.4 5c2 0 3.4 1 4.6 2.6C11.2 6 12.6 5 14.6 5 18 5 19.6 8.4 18 11.8 15.5 16.4 8 21 8 21z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-        <span class="icon-btn__count" id="favCount">0</span>
-      </button>
-      <button class="btn btn--brass btn--sm" id="listPropertyBtn">List a Property</button>
-      <button class="nav__burger" id="navBurger"
-              aria-label="Open menu"
-              aria-expanded="false"
-              aria-controls="navLinks">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main id="main">
-
-  <!-- ============ BOOKING PAGE ============ -->
-  <section class="sectionBooking" id="booking">
-    <div class="booking">
-      <div class="booking__copy" data-reveal>
-        <p class="eyebrow">By Appointment Only</p>
-        <h2>Book a Private Viewing</h2>
-        <p>Tell us when suits you. A partner from the desk will confirm within one business day — every viewing is accompanied, never a lockbox.</p>
-        <ul class="booking__list">
-          <li>Available seven days a week, by appointment</li>
-          <li>Video walkthroughs available on request</li>
-          <li>NDA provided for off-market residences</li>
-        </ul>
+    <!-- ============ LOADING SCREEN ============ -->
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader__mark">
+        <span class="loader__ring"></span>
+        <span class="loader__glyph">M&amp;S</span>
       </div>
+      <p class="loader__text">Meridian &amp; Stone</p>
+    </div>
 
-      <form class="booking__form" id="bookingForm" novalidate data-reveal>
-        <input type="hidden" id="bookingProperty" name="property">
-        <p class="booking__form-selected" id="bookingSelectedLabel">General enquiry — no residence selected</p>
+    <!-- ============ TOAST CONTAINER ============ -->
+    <div class="toast-stack" id="toastStack" aria-live="polite"></div>
 
-        <div class="form-grid">
-          <div class="field">
-            <label for="bkName">Full name</label>
-            <input type="text" id="bkName" required placeholder="Jordan Ellis">
-            <span class="field__error" data-error-for="bkName"></span>
+    <!-- ============ COMPARE DOCK ============ -->
+    <div class="compare-dock" id="compareDock">
+      <div class="compare-dock__inner">
+        <span class="compare-dock__label"
+          >Compare <strong id="compareCount">0</strong>/3</span
+        >
+        <div class="compare-dock__slots" id="compareSlots"></div>
+        <button class="btn btn--ghost btn--sm" id="openCompareBtn">
+          View comparison
+        </button>
+        <button
+          class="compare-dock__clear"
+          id="clearCompareBtn"
+          aria-label="Clear comparison list"
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ MOBILE MENU BACKDROP ============ -->
+    <div class="nav__backdrop" id="navBackdrop" aria-hidden="true"></div>
+
+    <!-- ============ NAVIGATION ============ -->
+    <header class="nav" id="siteNav">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__brand">
+          <span class="nav__mark">M&amp;S</span>
+          <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
+        </a>
+
+        <nav class="nav__links" id="navLinks">
+          <a href="listings.html" class="nav__link">Residences</a>
+          <a href="agents.html" class="nav__link">Agents</a>
+          <a href="about.html" class="nav__link">The House</a>
+          <a href="journal.html" class="nav__link">Journal</a>
+          <a href="contact.html" class="nav__link">Contact</a>
+        </nav>
+
+        <div class="nav__actions">
+          <button
+            class="icon-btn"
+            id="favToggleBtn"
+            title="View saved residences"
+            aria-label="Saved residences"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 21s-7.5-4.6-10-9.2C.4 8.4 2 5 5.4 5c2 0 3.4 1 4.6 2.6C11.2 6 12.6 5 14.6 5 18 5 19.6 8.4 18 11.8 15.5 16.4 8 21 8 21z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span class="icon-btn__count" id="favCount">0</span>
+          </button>
+          <button class="btn btn--brass btn--sm" id="listPropertyBtn">
+            List a Property
+          </button>
+          <button
+            class="nav__burger"
+            id="navBurger"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="navLinks"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============ BOOKING PAGE ============ -->
+      <section class="sectionBooking" id="booking">
+        <div class="booking">
+          <div class="booking__copy" data-reveal>
+            <p class="eyebrow">By Appointment Only</p>
+            <h2>Book a Private Viewing</h2>
+            <p>
+              Tell us when suits you. A partner from the desk will confirm
+              within one business day — every viewing is accompanied, never a
+              lockbox.
+            </p>
+            <ul class="booking__list">
+              <li>Available seven days a week, by appointment</li>
+              <li>Video walkthroughs available on request</li>
+              <li>NDA provided for off-market residences</li>
+            </ul>
           </div>
-          <div class="field">
-            <label for="bkEmail">Email</label>
-            <input type="email" id="bkEmail" required placeholder="jordan@email.com">
-            <span class="field__error" data-error-for="bkEmail"></span>
+
+          <form class="booking__form" id="bookingForm" novalidate data-reveal>
+            <input type="hidden" id="bookingProperty" name="property" />
+            <p class="booking__form-selected" id="bookingSelectedLabel">
+              General enquiry — no residence selected
+            </p>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="bkName">Full name</label>
+                <input
+                  type="text"
+                  id="bkName"
+                  required
+                  placeholder="Jordan Ellis"
+                />
+                <span class="field__error" data-error-for="bkName"></span>
+              </div>
+              <div class="field">
+                <label for="bkEmail">Email</label>
+                <input
+                  type="email"
+                  id="bkEmail"
+                  required
+                  placeholder="jordan@email.com"
+                />
+                <span class="field__error" data-error-for="bkEmail"></span>
+              </div>
+
+              <!-- ===== PHONE: country picker + number ===== -->
+              <div class="field">
+                <label for="bkPhone">Phone</label>
+                <div class="phone-input" id="phoneInput">
+                  <button
+                    type="button"
+                    class="phone-input__country"
+                    id="phoneCountryBtn"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-label="Select country code"
+                  >
+                    <span class="phone-input__flag" id="phoneFlag">🇺🇸</span>
+                    <span class="phone-input__dial" id="phoneDial">+1</span>
+                    <svg
+                      class="phone-input__caret"
+                      viewBox="0 0 24 24"
+                      width="12"
+                      height="12"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M6 9l6 6 6-6"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <input
+                    type="tel"
+                    id="bkPhone"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    placeholder="555 000 0000"
+                    aria-label="Phone number"
+                  />
+                  <div
+                    class="phone-input__menu"
+                    id="phoneMenu"
+                    role="listbox"
+                    aria-label="Country codes"
+                    hidden
+                  >
+                    <input
+                      type="text"
+                      class="phone-input__search"
+                      id="phoneSearch"
+                      placeholder="Search country…"
+                      aria-label="Search country"
+                      autocomplete="off"
+                    />
+                    <ul class="phone-input__list" id="phoneList"></ul>
+                  </div>
+                </div>
+                <span class="field__error" data-error-for="bkPhone"></span>
+              </div>
+              <!-- ===== /PHONE ===== -->
+
+              <div class="field">
+                <label for="bkDate">Preferred date</label>
+                <input type="date" id="bkDate" required />
+                <span class="field__error" data-error-for="bkDate"></span>
+              </div>
+              <div class="field">
+                <label for="bkTime">Preferred time</label>
+                <input type="time" id="bkTime" required />
+                <span class="field__error" data-error-for="bkTime"></span>
+              </div>
+              <div class="field field--full">
+                <label for="bkMessage">Message</label>
+                <textarea
+                  id="bkMessage"
+                  rows="3"
+                  placeholder="Anything we should know before the viewing?"
+                ></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn--brass btn--wide">
+              Request Viewing
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="nav__mark">M&amp;S</span>
+          <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
+          <p>A private real estate house. By appointment, always.</p>
+        </div>
+        <div class="footer__cols">
+          <div>
+            <h4>Navigate</h4>
+            <a href="listings.html">Residences</a>
+            <a href="agents.html">Agents</a>
+            <a href="about.html">The House</a>
+            <a href="journal.html">Journal</a>
           </div>
-          <div class="field">
-            <label for="bkPhone">Phone</label>
-            <input type="tel" id="bkPhone" required placeholder="+1 (555) 000-0000">
-            <span class="field__error" data-error-for="bkPhone"></span>
+          <div>
+            <h4>Services</h4>
+            <a href="booking.html">Private Viewings</a>
+            <a href="upload.html">List a Property</a>
+            <a href="contact.html">Contact</a>
           </div>
-          <div class="field">
-            <label for="bkDate">Preferred date</label>
-            <input type="date" id="bkDate" required>
-            <span class="field__error" data-error-for="bkDate"></span>
-          </div>
-          <div class="field">
-            <label for="bkTime">Preferred time</label>
-            <input type="time" id="bkTime" required>
-            <span class="field__error" data-error-for="bkTime"></span>
-          </div>
-          <div class="field field--full">
-            <label for="bkMessage">Message</label>
-            <textarea id="bkMessage" rows="3" placeholder="Anything we should know before the viewing?"></textarea>
+          <div>
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms</a>
+            <a href="#">Fair Housing</a>
           </div>
         </div>
-
-        <button type="submit" class="btn btn--brass btn--wide">Request Viewing</button>
-      </form>
-    </div>
-  </section>
-
-</main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="footer__inner">
-    <div class="footer__brand">
-      <span class="nav__mark">M&amp;S</span>
-      <span class="nav__brandtext">Meridian <em>&amp;</em> Stone</span>
-      <p>A private real estate house. By appointment, always.</p>
-    </div>
-    <div class="footer__cols">
-      <div>
-        <h4>Navigate</h4>
-        <a href="listings.html">Residences</a>
-        <a href="agents.html">Agents</a>
-        <a href="about.html">The House</a>
-        <a href="journal.html">Journal</a>
       </div>
-      <div>
-        <h4>Services</h4>
-        <a href="booking.html">Private Viewings</a>
-        <a href="upload.html">List a Property</a>
-        <a href="contact.html">Contact</a>
+      <div class="footer__bottom">
+        <p>
+          &copy; <span id="year"></span> Meridian &amp; Stone Real Estate. All
+          rights reserved.
+        </p>
+        <p>Demo site — built for illustration only.</p>
       </div>
-      <div>
-        <h4>Legal</h4>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms</a>
-        <a href="#">Fair Housing</a>
+    </footer>
+
+    <!-- ============ BACK TO TOP ============ -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M12 19V5M5 12l7-7 7 7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <!-- ============ PROPERTY DETAIL MODAL ============ -->
+    <div class="modal" id="propertyModal" aria-hidden="true">
+      <div class="modal__backdrop" data-close-modal></div>
+      <div
+        class="modal__panel modal__panel--property"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button class="modal__close" data-close-modal aria-label="Close">
+          &times;
+        </button>
+        <div class="modal__body" id="modalBody"></div>
       </div>
     </div>
-  </div>
-  <div class="footer__bottom">
-    <p>&copy; <span id="year"></span> Meridian &amp; Stone Real Estate. All rights reserved.</p>
-    <p>Demo site — built for illustration only.</p>
-  </div>
-</footer>
 
-<!-- ============ BACK TO TOP ============ -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top">
-  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</button>
-
-<!-- ============ PROPERTY DETAIL MODAL ============ -->
-<div class="modal" id="propertyModal" aria-hidden="true">
-  <div class="modal__backdrop" data-close-modal></div>
-  <div class="modal__panel modal__panel--property" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
-    <div class="modal__body" id="modalBody"></div>
-  </div>
-</div>
-
-<!-- ============ COMPARE MODAL ============ -->
-<div class="modal" id="compareModal" aria-hidden="true">
-  <div class="modal__backdrop" data-close-modal></div>
-  <div class="modal__panel modal__panel--compare" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
-    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
-    <h3 id="compareTitle">Compare Residences</h3>
-    <div class="compare-table-wrap">
-      <table class="compare-table" id="compareTable"></table>
+    <!-- ============ COMPARE MODAL ============ -->
+    <div class="modal" id="compareModal" aria-hidden="true">
+      <div class="modal__backdrop" data-close-modal></div>
+      <div
+        class="modal__panel modal__panel--compare"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="compareTitle"
+      >
+        <button class="modal__close" data-close-modal aria-label="Close">
+          &times;
+        </button>
+        <h3 id="compareTitle">Compare Residences</h3>
+        <div class="compare-table-wrap">
+          <table class="compare-table" id="compareTable"></table>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- ============ FAVORITES MODAL ============ -->
-<div class="modal" id="favModal" aria-hidden="true">
-  <div class="modal__backdrop" data-close-modal></div>
-  <div class="modal__panel modal__panel--fav" role="dialog" aria-modal="true" aria-labelledby="favTitle">
-    <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
-    <h3 id="favTitle">Saved Residences</h3>
-    <div class="fav-grid" id="favGrid"></div>
-    <p class="fav-empty" id="favEmpty" hidden>Nothing saved yet — tap the heart on any residence to keep it here.</p>
-  </div>
-</div>
+    <!-- ============ FAVORITES MODAL ============ -->
+    <div class="modal" id="favModal" aria-hidden="true">
+      <div class="modal__backdrop" data-close-modal></div>
+      <div
+        class="modal__panel modal__panel--fav"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="favTitle"
+      >
+        <button class="modal__close" data-close-modal aria-label="Close">
+          &times;
+        </button>
+        <h3 id="favTitle">Saved Residences</h3>
+        <div class="fav-grid" id="favGrid"></div>
+        <p class="fav-empty" id="favEmpty" hidden>
+          Nothing saved yet — tap the heart on any residence to keep it here.
+        </p>
+      </div>
+    </div>
 
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

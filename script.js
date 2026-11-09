@@ -1,7 +1,7 @@
 /* =========================================================
    MERIDIAN & STONE — script.js
    Vanilla JS only. Organized by section, no dependencies.
-   MULTI-PAGE VERSION (corrected)
+   MULTI-PAGE VERSION (with country phone picker)
    ========================================================= */
 (function () {
   "use strict";
@@ -26,7 +26,6 @@
     return `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
   }
 
-  // FIX: guard against double-binding — only attach the fallback once per element
   function withFallback(imgEl, seed) {
     if (!imgEl || imgEl.dataset.fallbackBound === "1") return;
     imgEl.dataset.fallbackBound = "1";
@@ -504,6 +503,7 @@
     recent: "ms_recent",
     compare: "ms_compare",
     search: "ms_search",
+    country: "ms_phone_country",
   };
 
   const state = {
@@ -512,7 +512,7 @@
     compare: JSON.parse(localStorage.getItem(STORE_KEYS.compare) || "[]"),
     visibleCount: 6,
     testiIndex: 0,
-    currentModalId: null, // FIX: track which property modal is open so fav/compare can update in place
+    currentModalId: null,
   };
 
   function persist(key, value) {
@@ -725,7 +725,6 @@
           state.favorites.includes(card.dataset.id),
         );
     });
-    // FIX: if the property modal is open, update its fav button label in place instead of re-rendering the whole modal
     if (state.currentModalId) updateModalActionButtons(state.currentModalId);
     renderFavModal();
   }
@@ -782,7 +781,6 @@
         );
     });
 
-    // FIX: keep the open property modal's compare button in sync
     if (state.currentModalId) updateModalActionButtons(state.currentModalId);
   }
 
@@ -795,7 +793,6 @@
         "<tr><td>Add up to 3 residences from any listing card to compare them here.</td></tr>";
       return;
     }
-    // FIX: photo row was duplicated (once in rows[], once appended at bottom). Now single, at top.
     const rows = [
       ["Photo", (p) => `<img src="${p.images[0]}" alt="${p.title}">`],
       ["Residence", (p) => `<strong>${p.title}</strong>`],
@@ -843,7 +840,7 @@
     const p = getProperty(id);
     if (!p) return;
     addRecent(id);
-    state.currentModalId = id; // FIX: remember which property is open
+    state.currentModalId = id;
 
     const body = qs("#modalBody");
     if (!body) return;
@@ -902,24 +899,20 @@
     }
 
     const favBtn = qs("#pmFavBtn", body);
-    // FIX: was calling openPropertyModal(p.id) which reset scroll & re-added to recent. Now just toggles + updates the button.
     if (favBtn)
       favBtn.addEventListener("click", () => {
         toggleFavorite(p.id);
       });
 
     const compareBtn = qs("#pmCompareBtn", body);
-    // FIX: same — no full re-render, just toggle + label update.
     if (compareBtn)
       compareBtn.addEventListener("click", () => {
         toggleCompare(p.id);
       });
 
-    // FIX: do not bind image fallbacks on modal images — they don't have data-seed and the URL is already valid
     openModal(qs("#propertyModal"));
   }
 
-  // NEW: updates only the fav/compare button labels in the open modal
   function updateModalActionButtons(id) {
     const p = getProperty(id);
     if (!p) return;
@@ -946,7 +939,6 @@
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
-    // NEW: move focus into the modal for keyboard/screen-reader users
     const focusTarget =
       modal.querySelector(".modal__close") ||
       modal.querySelector("button, a, input");
@@ -958,7 +950,6 @@
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
     if (modal.id === "propertyModal") state.currentModalId = null;
-    // NEW: return focus to whatever opened the modal
     if (lastFocused && typeof lastFocused.focus === "function")
       lastFocused.focus();
     lastFocused = null;
@@ -974,7 +965,6 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") qsa(".modal.is-open").forEach(closeModal);
     });
-    // NEW: simple focus trap — Tab cycles inside the open modal
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Tab") return;
       const open = qs(".modal.is-open");
@@ -1071,7 +1061,6 @@
         showTestimonial((state.testiIndex + 1) % TESTIMONIALS.length),
       );
 
-    // FIX: auto-advance was never cleared on mouseleave (leaked) and paused only once.
     let auto = setInterval(
       () => showTestimonial((state.testiIndex + 1) % TESTIMONIALS.length),
       6000,
@@ -1249,7 +1238,6 @@
     }
 
     if (burger && links) {
-      // FIX: aria-expanded was never set; open/close now toggles it and syncs the backdrop + body scroll lock
       burger.addEventListener("click", () => {
         const willOpen = !links.classList.contains("is-open");
         if (willOpen) openMenu();
@@ -1281,7 +1269,7 @@
      15. FORM VALIDATION HELPERS
   --------------------------------------------------------- */
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const PHONE_RE = /^[+]?[\d\s().-]{7,}$/;
+  const PHONE_DIGITS_RE = /^\d{6,15}$/;
 
   function setError(fieldEl, message) {
     if (!fieldEl) return !message;
@@ -1310,14 +1298,16 @@
       EMAIL_RE.test(el.value.trim()) ? "" : "Enter a valid email address.",
     );
   }
+
   function validatePhone(el) {
     if (!el) return false;
-    if (!el.value.trim()) return setError(el, "Phone number is required.");
-    return setError(
-      el,
-      PHONE_RE.test(el.value.trim()) ? "" : "Enter a valid phone number.",
-    );
+    const digits = el.value.replace(/\D/g, "");
+    if (!digits) return setError(el, "Phone number is required.");
+    if (!PHONE_DIGITS_RE.test(digits))
+      return setError(el, "Enter 6–15 digits.");
+    return setError(el, "");
   }
+
   function validateDateNotPast(el) {
     if (!el) return false;
     if (!el.value) return setError(el, "Choose a date.");
@@ -1331,7 +1321,210 @@
   }
 
   /* ---------------------------------------------------------
-     16. BOOKING FORM
+     16. COUNTRY PHONE PICKER
+  --------------------------------------------------------- */
+  const COUNTRIES = [
+    { code: "US", flag: "🇺🇸", name: "United States", dial: "+1" },
+    { code: "CA", flag: "🇨🇦", name: "Canada", dial: "+1" },
+    { code: "GB", flag: "🇬🇧", name: "United Kingdom", dial: "+44" },
+    { code: "AU", flag: "🇦🇺", name: "Australia", dial: "+61" },
+    { code: "NZ", flag: "🇳🇿", name: "New Zealand", dial: "+64" },
+    { code: "IE", flag: "🇮🇪", name: "Ireland", dial: "+353" },
+    { code: "FR", flag: "🇫🇷", name: "France", dial: "+33" },
+    { code: "DE", flag: "🇩🇪", name: "Germany", dial: "+49" },
+    { code: "IT", flag: "🇮🇹", name: "Italy", dial: "+39" },
+    { code: "ES", flag: "🇪🇸", name: "Spain", dial: "+34" },
+    { code: "PT", flag: "🇵🇹", name: "Portugal", dial: "+351" },
+    { code: "NL", flag: "🇳🇱", name: "Netherlands", dial: "+31" },
+    { code: "BE", flag: "🇧🇪", name: "Belgium", dial: "+32" },
+    { code: "CH", flag: "🇨🇭", name: "Switzerland", dial: "+41" },
+    { code: "AT", flag: "🇦🇹", name: "Austria", dial: "+43" },
+    { code: "SE", flag: "🇸🇪", name: "Sweden", dial: "+46" },
+    { code: "NO", flag: "🇳🇴", name: "Norway", dial: "+47" },
+    { code: "DK", flag: "🇩🇰", name: "Denmark", dial: "+45" },
+    { code: "FI", flag: "🇫🇮", name: "Finland", dial: "+358" },
+    { code: "PL", flag: "🇵🇱", name: "Poland", dial: "+48" },
+    { code: "GR", flag: "🇬🇷", name: "Greece", dial: "+30" },
+    { code: "TR", flag: "🇹🇷", name: "Turkey", dial: "+90" },
+    { code: "AE", flag: "🇦🇪", name: "United Arab Emirates", dial: "+971" },
+    { code: "SA", flag: "🇸🇦", name: "Saudi Arabia", dial: "+966" },
+    { code: "QA", flag: "🇶🇦", name: "Qatar", dial: "+974" },
+    { code: "IL", flag: "🇮🇱", name: "Israel", dial: "+972" },
+    { code: "IN", flag: "🇮🇳", name: "India", dial: "+91" },
+    { code: "PK", flag: "🇵🇰", name: "Pakistan", dial: "+92" },
+    { code: "BD", flag: "🇧🇩", name: "Bangladesh", dial: "+880" },
+    { code: "CN", flag: "🇨🇳", name: "China", dial: "+86" },
+    { code: "JP", flag: "🇯🇵", name: "Japan", dial: "+81" },
+    { code: "KR", flag: "🇰🇷", name: "South Korea", dial: "+82" },
+    { code: "SG", flag: "🇸🇬", name: "Singapore", dial: "+65" },
+    { code: "MY", flag: "🇲🇾", name: "Malaysia", dial: "+60" },
+    { code: "TH", flag: "🇹🇭", name: "Thailand", dial: "+66" },
+    { code: "ID", flag: "🇮🇩", name: "Indonesia", dial: "+62" },
+    { code: "PH", flag: "🇵🇭", name: "Philippines", dial: "+63" },
+    { code: "VN", flag: "🇻🇳", name: "Vietnam", dial: "+84" },
+    { code: "HK", flag: "🇭🇰", name: "Hong Kong", dial: "+852" },
+    { code: "ZA", flag: "🇿🇦", name: "South Africa", dial: "+27" },
+    { code: "EG", flag: "🇪🇬", name: "Egypt", dial: "+20" },
+    { code: "NG", flag: "🇳🇬", name: "Nigeria", dial: "+234" },
+    { code: "KE", flag: "🇰🇪", name: "Kenya", dial: "+254" },
+    { code: "GH", flag: "🇬🇭", name: "Ghana", dial: "+233" },
+    { code: "BR", flag: "🇧🇷", name: "Brazil", dial: "+55" },
+    { code: "AR", flag: "🇦🇷", name: "Argentina", dial: "+54" },
+    { code: "CL", flag: "🇨🇱", name: "Chile", dial: "+56" },
+    { code: "CO", flag: "🇨🇴", name: "Colombia", dial: "+57" },
+    { code: "MX", flag: "🇲🇽", name: "Mexico", dial: "+52" },
+    { code: "PE", flag: "🇵🇪", name: "Peru", dial: "+51" },
+    { code: "RU", flag: "🇷🇺", name: "Russia", dial: "+7" },
+    { code: "UA", flag: "🇺🇦", name: "Ukraine", dial: "+380" },
+    { code: "CZ", flag: "🇨🇿", name: "Czechia", dial: "+420" },
+    { code: "HU", flag: "🇭🇺", name: "Hungary", dial: "+36" },
+    { code: "RO", flag: "🇷🇴", name: "Romania", dial: "+40" },
+    { code: "HR", flag: "🇭🇷", name: "Croatia", dial: "+385" },
+  ];
+
+  function initPhoneInput() {
+    const wrap = qs("#phoneInput");
+    const btn = qs("#phoneCountryBtn");
+    const menu = qs("#phoneMenu");
+    const search = qs("#phoneSearch");
+    const list = qs("#phoneList");
+    const flagEl = qs("#phoneFlag");
+    const dialEl = qs("#phoneDial");
+    const phoneField = qs("#bkPhone");
+    if (!wrap || !btn || !menu || !list) return;
+
+    const saved = localStorage.getItem(STORE_KEYS.country);
+    let selected = COUNTRIES.find((c) => c.code === saved) || COUNTRIES[0];
+
+    // BUG FIX 1: force the menu closed on init no matter what markup says
+    menu.hidden = true;
+    wrap.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+
+    function applySelected() {
+      if (flagEl) flagEl.textContent = selected.flag;
+      if (dialEl) dialEl.textContent = selected.dial;
+      btn.setAttribute(
+        "aria-label",
+        `Selected country: ${selected.name} (${selected.dial}). Change country`,
+      );
+    }
+
+    function renderList(query = "") {
+      const q = query.trim().toLowerCase();
+      const filtered = q
+        ? COUNTRIES.filter(
+            (c) =>
+              c.name.toLowerCase().includes(q) ||
+              c.dial.includes(q) ||
+              c.code.toLowerCase().includes(q),
+          )
+        : COUNTRIES;
+      if (!filtered.length) {
+        list.innerHTML = `<li class="empty">No country found</li>`;
+        return;
+      }
+      list.innerHTML = filtered
+        .map(
+          (c) => `
+        <li role="option" data-code="${c.code}" class="${c.code === selected.code ? "is-active" : ""}">
+          <span class="flag">${c.flag}</span>
+          <span class="name">${c.name}</span>
+          <span class="dial">${c.dial}</span>
+        </li>
+      `,
+        )
+        .join("");
+      qsa("li[data-code]", list).forEach((li) => {
+        // Use pointerdown + preventDefault so focus never leaves the input mid-selection
+        li.addEventListener("pointerdown", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          selectCountry(li.dataset.code);
+        });
+        li.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectCountry(li.dataset.code);
+          }
+        });
+      });
+    }
+
+    // BUG FIX 2: selecting closes the menu synchronously, blurs the search box,
+    // then focuses the number input. No timers.
+    function selectCountry(code) {
+      const match = COUNTRIES.find((c) => c.code === code);
+      if (match) selected = match;
+      localStorage.setItem(STORE_KEYS.country, selected.code);
+      applySelected();
+      closeMenu();
+      if (search) search.blur();
+      if (phoneField) phoneField.focus();
+    }
+
+    function openMenu() {
+      if (!menu.hidden) return;
+      renderList("");
+      menu.hidden = false;
+      wrap.classList.add("is-open");
+      btn.setAttribute("aria-expanded", "true");
+      if (search) search.value = "";
+    }
+
+    // closeMenu has NO guard — always force the closed state
+    function closeMenu() {
+      menu.hidden = true;
+      wrap.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+      if (search) search.value = "";
+    }
+
+    // The ONLY path that opens the menu is a direct click on the flag button
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (menu.hidden) openMenu();
+      else closeMenu();
+    });
+
+    if (search) {
+      search.addEventListener("input", () => renderList(search.value));
+      search.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          e.stopPropagation();
+          closeMenu();
+          btn.focus();
+        }
+      });
+    }
+
+    // Clicks outside the widget close the menu
+    document.addEventListener("pointerdown", (e) => {
+      if (!menu.hidden && !wrap.contains(e.target)) closeMenu();
+    });
+
+    // Escape closes the menu wherever focus happens to be
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.hidden) {
+        closeMenu();
+        btn.focus();
+      }
+    });
+
+    // Digits-only typing in the number field
+    if (phoneField) {
+      phoneField.addEventListener("input", () => {
+        phoneField.value = phoneField.value.replace(/[^\d\s().-]/g, "");
+      });
+    }
+
+    applySelected();
+  }
+
+  /* ---------------------------------------------------------
+     17. BOOKING FORM
   --------------------------------------------------------- */
   function initBookingForm() {
     const form = qs("#bookingForm");
@@ -1350,8 +1543,10 @@
       const validTime = setError(time, time?.value ? "" : "Choose a time.");
 
       if (validName && validEmail && validPhone && validDate && validTime) {
+        const dialCode = qs("#phoneDial")?.textContent || "";
+        const fullPhone = `${dialCode} ${phone.value.trim()}`;
         toast(
-          `Viewing requested for ${date.value} at ${time.value}. We'll confirm shortly.`,
+          `Viewing requested for ${date.value} at ${time.value}. We'll confirm at ${fullPhone}.`,
         );
         form.reset();
         const bookingProp = qs("#bookingProperty");
@@ -1366,7 +1561,7 @@
   }
 
   /* ---------------------------------------------------------
-     17. UPLOAD FORM (front-end demo)
+     18. UPLOAD FORM (front-end demo)
   --------------------------------------------------------- */
   function initUploadForm() {
     const form = qs("#uploadForm");
@@ -1448,7 +1643,7 @@
   }
 
   /* ---------------------------------------------------------
-     18. CONTACT FORM
+     19. CONTACT FORM
   --------------------------------------------------------- */
   function initContactForm() {
     const form = qs("#contactForm");
@@ -1471,7 +1666,7 @@
   }
 
   /* ---------------------------------------------------------
-     19. NEWSLETTER FORM
+     20. NEWSLETTER FORM
   --------------------------------------------------------- */
   function initNewsletterForm() {
     const form = qs("#newsletterForm");
@@ -1489,7 +1684,7 @@
   }
 
   /* ---------------------------------------------------------
-     20. HERO SEARCH + FILTER SYNC
+     21. HERO SEARCH + FILTER SYNC
   --------------------------------------------------------- */
   function initHeroSearch() {
     const searchBar = qs("#searchBar");
@@ -1508,9 +1703,8 @@
   }
 
   function initFilters() {
-    // FIX: restore hero search correctly — the price must be applied to the *range slider* on listings,
-    // not read from a non-existent #searchPrice element.
     const savedSearch = localStorage.getItem(STORE_KEYS.search);
+    let hadSaved = false;
     if (savedSearch) {
       try {
         const data = JSON.parse(savedSearch);
@@ -1530,6 +1724,7 @@
           );
           if (priceOut) priceOut.textContent = money(priceRange.value);
         }
+        hadSaved = true;
       } catch (_) {
         /* ignore malformed payload */
       }
@@ -1580,12 +1775,11 @@
       });
     }
 
-    // Apply restored filters on first paint
-    if (savedSearch) renderListings();
+    if (hadSaved) renderListings();
   }
 
   /* ---------------------------------------------------------
-     21. NAV / DOCK BUTTON BINDINGS
+     22. NAV / DOCK BUTTON BINDINGS
   --------------------------------------------------------- */
   function initTopLevelButtons() {
     const favBtn = qs("#favToggleBtn");
@@ -1619,7 +1813,7 @@
   }
 
   /* ---------------------------------------------------------
-     22. LOADER
+     23. LOADER
   --------------------------------------------------------- */
   function initLoader() {
     const loader = qs("#loader");
@@ -1627,12 +1821,11 @@
     window.addEventListener("load", () => {
       setTimeout(() => loader.classList.add("is-hidden"), 350);
     });
-    // Safety net in case 'load' already fired
     setTimeout(() => loader.classList.add("is-hidden"), 3000);
   }
 
   /* ---------------------------------------------------------
-     23. ACTIVE NAV LINK (Multi-page)
+     24. ACTIVE NAV LINK (Multi-page)
   --------------------------------------------------------- */
   function setActiveNavLink() {
     const currentPage =
@@ -1645,7 +1838,7 @@
   }
 
   /* ---------------------------------------------------------
-     24. INIT
+     25. INIT
   --------------------------------------------------------- */
   function init() {
     const yearSpan = qs("#year");
@@ -1674,6 +1867,7 @@
     initHeroSearch();
     initFilters();
     initTopLevelButtons();
+    initPhoneInput();
     initBookingForm();
     initUploadForm();
     initContactForm();

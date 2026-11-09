@@ -16,11 +16,9 @@
   --brass-light: #d8b77e;
   --brass-dark: #8a6c3e;
   --amber-glow: #d8a657;
-  /* FIX: sage darkened from #6B7A73 (~3.5:1 on ivory) to #55635B (~5.1:1) for WCAG AA body copy */
   --sage: #55635b;
   --line: rgba(11, 18, 32, 0.1);
   --line-light: rgba(247, 244, 238, 0.18);
-  /* FIX: dedicated focus color that contrasts on both light and brass backgrounds */
   --focus: #1e6fbf;
 
   /* ---- Type ---- */
@@ -105,7 +103,6 @@ p {
   margin: 0;
 }
 
-/* FIX: focus ring was invisible on brass buttons (brass on brass). New ring uses --focus + offset + white halo. */
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
@@ -118,7 +115,6 @@ p {
   box-shadow: 0 0 0 4px var(--focus);
 }
 
-/* NEW: skip-to-content link (a11y) */
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -135,7 +131,6 @@ p {
   top: 1rem;
 }
 
-/* NEW: <main> is the flex child so footer sticks to bottom on short pages */
 main {
   flex: 1 0 auto;
 }
@@ -385,7 +380,6 @@ main {
   right: 0;
 }
 
-/* ===== ACTIVE LINK STYLING (set by JS, not hardcoded in HTML) ===== */
 .nav__link.active {
   color: var(--brass-light) !important;
 }
@@ -394,7 +388,6 @@ main {
   width: 100% !important;
 }
 
-/* ===== SCROLLED STATE ACTIVE LINK ===== */
 .nav.is-scrolled .nav__link.active {
   color: var(--brass-dark) !important;
 }
@@ -452,7 +445,6 @@ main {
   transition: background 0.3s;
 }
 
-/* NEW: mobile menu backdrop — clicking outside closes the menu */
 .nav__backdrop {
   position: fixed;
   inset: 0;
@@ -837,8 +829,6 @@ main {
   font-size: 0.95rem;
 }
 
-/* FIX: pages that use a section class directly (agents, listings, journal, about, booking, contact)
-   need side padding without the max-width constraint. */
 .section--stone#agents,
 .section--stone#listings,
 .section--stone#journal {
@@ -869,7 +859,6 @@ main {
   grid-row: span 1;
   cursor: pointer;
 }
-/* FIX: only the first and fourth cards are tall on desktop; the rule collapses cleanly at 1100px below */
 .feature-card:nth-child(1) {
   grid-column: span 2;
   grid-row: span 2;
@@ -1247,8 +1236,6 @@ main {
   color: var(--ivory);
 }
 
-/* FIX: compare dock and back-to-top overlapped bottom-right on mobile.
-   Raise back-to-top above the dock when the dock is visible. */
 .back-to-top {
   bottom: 1.6rem;
   right: 1.6rem;
@@ -1830,7 +1817,6 @@ body:has(.compare-dock.is-visible) .back-to-top {
 .newsletter .eyebrow {
   color: rgba(11, 18, 32, 0.6);
 }
-/* FIX: form needs position:relative so the absolutely positioned error spans anchor correctly */
 .newsletter__form {
   display: flex;
   gap: 0.8rem;
@@ -2253,13 +2239,185 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 
 /* =========================================================
+   PHONE INPUT (country picker + number)
+   ========================================================= */
+.phone-input {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: visible;
+  transition: border-color 0.25s;
+  z-index: 1;
+}
+.phone-input:focus-within {
+  border-color: var(--brass);
+}
+.field.has-error .phone-input {
+  border-color: #c1584a !important;
+}
+
+.phone-input__country {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.9rem;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--line);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.phone-input__country:hover {
+  background: var(--ivory-dim);
+}
+.phone-input__flag {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.phone-input__dial {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+.phone-input__caret {
+  color: var(--sage);
+  flex-shrink: 0;
+}
+
+.phone-input > input[type="tel"] {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  letter-spacing: 0.02em;
+}
+
+.phone-input__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 70;
+  width: 320px;
+  max-width: calc(100vw - 2rem);
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 340px;
+}
+
+/* critical: make sure hidden always wins */
+.phone-input__menu[hidden] {
+  display: none !important;
+}
+
+.phone-input__search {
+  border: none;
+  border-bottom: 1px solid var(--line);
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  background: var(--ivory);
+  color: var(--ink);
+  outline: none;
+}
+.phone-input__search:focus {
+  background: var(--ivory-dim);
+}
+.phone-input__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0;
+  overflow-y: auto;
+  max-height: 280px;
+}
+.phone-input__list li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.phone-input__list li:hover,
+.phone-input__list li.is-active {
+  background: var(--ivory-dim);
+}
+.phone-input__list .flag {
+  font-size: 1.15rem;
+}
+.phone-input__list .name {
+  flex: 1;
+  color: var(--ink);
+}
+.phone-input__list .dial {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--sage);
+}
+.phone-input__list .empty {
+  padding: 0.8rem 1rem;
+  color: var(--sage);
+  font-size: 0.85rem;
+  text-align: center;
+  cursor: default;
+}
+
+/* Stacking fix — when the menu is open, lift the widget above sibling fields */
+.phone-input.is-open {
+  z-index: 60;
+}
+.phone-input.is-open .phone-input__menu {
+  pointer-events: auto;
+}
+.field:has(.phone-input.is-open) {
+  position: relative;
+  z-index: 61;
+}
+
+/* Dark booking-form variant */
+.booking__form .phone-input {
+  background: rgba(247, 244, 238, 0.06);
+  border-color: rgba(247, 244, 238, 0.18);
+}
+.booking__form .phone-input:focus-within {
+  border-color: var(--brass-light);
+}
+.booking__form .phone-input__country {
+  color: var(--ivory);
+  border-right-color: rgba(247, 244, 238, 0.18);
+}
+.booking__form .phone-input__country:hover {
+  background: rgba(247, 244, 238, 0.08);
+}
+.booking__form .phone-input > input[type="tel"] {
+  color: var(--ivory);
+}
+.booking__form .phone-input > input[type="tel"]::placeholder {
+  color: rgba(247, 244, 238, 0.5);
+}
+.booking__form .phone-input__menu {
+  background: var(--ivory);
+}
+
+/* =========================================================
    RESPONSIVE
    ========================================================= */
 @media (max-width: 1100px) {
   .feature-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* FIX: 4th card now keeps its 2-row height so the left column stays balanced */
   .feature-card:nth-child(4) {
     grid-column: span 2;
     grid-row: span 2;
@@ -2376,9 +2534,13 @@ body:has(.compare-dock.is-visible) .back-to-top {
     justify-content: center;
     border-radius: var(--radius-md);
   }
-
-  /* FIX: on mobile the dock grows tall; lift back-to-top well clear of it */
   body:has(.compare-dock.is-visible) .back-to-top {
     bottom: 8.5rem;
+  }
+
+  /* Phone menu anchors to full input width on mobile so it never clips */
+  .phone-input__menu {
+    width: 100%;
+    max-width: 100%;
   }
 }
