@@ -296,7 +296,6 @@ main {
 }
 .nav.is-scrolled::before {
   background: rgba(247, 244, 238, 0.86);
-
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
 }
@@ -547,6 +546,9 @@ main {
 .btn--wide {
   width: 100%;
   padding: 1.05rem;
+}
+.btn--submit {
+  margin-top: 1.4rem;
 }
 
 /* =========================================================
@@ -835,8 +837,7 @@ main {
   padding: 7rem 2rem;
 }
 .sectionAbout,
-.sectionBooking,
-.sectionContact {
+.sectionBooking {
   padding: 7rem 2rem;
   max-width: 1360px;
   margin: 0 auto;
@@ -1096,12 +1097,19 @@ main {
     fill 0.3s,
     stroke 0.3s;
 }
+.property-card__fav svg path {
+  fill: none;
+  stroke: currentColor;
+}
 .property-card__fav:hover {
   transform: scale(1.12);
 }
-.property-card__fav.is-active svg {
-  fill: #c1584a;
-  stroke: #c1584a;
+.property-card__fav.is-active {
+  color: #e63946;
+}
+.property-card__fav.is-active svg path {
+  fill: #e63946;
+  stroke: #e63946;
 }
 
 .property-card__body {
@@ -1838,7 +1846,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 
 /* =========================================================
-   CONTACT
+   CONTACT — LAYOUT
    ========================================================= */
 .contact__grid {
   display: grid;
@@ -2193,6 +2201,10 @@ body:has(.compare-dock.is-visible) .back-to-top {
   gap: 1rem;
   flex-wrap: wrap;
 }
+#pmFavBtn.is-active {
+  color: #e63946;
+  border-color: #e63946;
+}
 
 /* compare table */
 .compare-table-wrap {
@@ -2317,8 +2329,6 @@ body:has(.compare-dock.is-visible) .back-to-top {
   flex-direction: column;
   max-height: 340px;
 }
-
-/* critical: make sure hidden always wins */
 .phone-input__menu[hidden] {
   display: none !important;
 }
@@ -2374,7 +2384,6 @@ body:has(.compare-dock.is-visible) .back-to-top {
   cursor: default;
 }
 
-/* Stacking fix — when the menu is open, lift the widget above sibling fields */
 .phone-input.is-open {
   z-index: 60;
 }
@@ -2386,7 +2395,6 @@ body:has(.compare-dock.is-visible) .back-to-top {
   z-index: 61;
 }
 
-/* Dark booking-form variant */
 .booking__form .phone-input {
   background: rgba(247, 244, 238, 0.06);
   border-color: rgba(247, 244, 238, 0.18);
@@ -2409,6 +2417,92 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 .booking__form .phone-input__menu {
   background: var(--ivory);
+}
+
+/* =========================================================
+   BACKGROUND BUILDING IMAGES PER PAGE
+   ========================================================= */
+
+/* Listings */
+.section--listings {
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.55)),
+    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Agents */
+.section--agents {
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.55)),
+    url("https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* About */
+.section--about {
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.6), rgba(15, 20, 28, 0.6)),
+    url("https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Journal */
+.section--journal {
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.6), rgba(15, 20, 28, 0.6)),
+    url("https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Upload */
+.section--upload {
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.65), rgba(15, 20, 28, 0.65)),
+    url("https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* =========================================================
+   CONTACT — SEPARATED CLASSES
+   ========================================================= */
+
+/* Layout: full-bleed section, content centered inside */
+.sectionContact {
+  padding: 7rem 2rem;
+  width: 100%;
+  position: relative;
+}
+
+/* Background: only the .section--contact class paints the image */
+.section--contact {
+  background-color: #0f141c;
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.68), rgba(15, 20, 28, 0.68)),
+    url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  min-height: 100vh;
+}
+
+/* Center inner content within the full-bleed section */
+.section--contact > .section__head,
+.section--contact > .contact__grid {
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* =========================================================
@@ -2537,114 +2631,18 @@ body:has(.compare-dock.is-visible) .back-to-top {
   body:has(.compare-dock.is-visible) .back-to-top {
     bottom: 8.5rem;
   }
-
-  /* Phone menu anchors to full input width on mobile so it never clips */
   .phone-input__menu {
     width: 100%;
     max-width: 100%;
   }
-}
 
-.property-card__fav svg path {
-  fill: none;
-  stroke: currentColor;
-}
-.property-card__fav.is-active {
-  color: #e63946;
-}
-.property-card__fav.is-active svg path {
-  fill: #e63946;
-  stroke: #e63946;
-}
-#pmFavBtn.is-active {
-  color: #e63946;
-  border-color: #e63946;
-}
-
-/* =========================================================
-   BACKGROUND BUILDING IMAGES PER PAGE
-   ========================================================= */
-
-/* Listings */
-.section--listings {
-  background-image:
-    linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.55)),
-    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-/* Agents */
-.section--agents {
-  background-image:
-    linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.55)),
-    url("https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1920&auto=format&fit=crop");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-/* About */
-.section--about {
-  background-image:
-    linear-gradient(rgba(15, 20, 28, 0.6), rgba(15, 20, 28, 0.6)),
-    url("https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1920&auto=format&fit=crop");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-/* Journal */
-.section--journal {
-  background-image:
-    linear-gradient(rgba(15, 20, 28, 0.6), rgba(15, 20, 28, 0.6)),
-    url("https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1920&auto=format&fit=crop");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-/* Contact — fixed URL (was Adobe Stock page, now a real image) */
-.sectionContact.section--contact {
-  background-image:
-    linear-gradient(rgba(15, 20, 28, 0.68), rgba(15, 20, 28, 0.68)),
-    url("https://unsplash.com/photos/a-wooden-table-topped-with-scrabble-tiles-spelling-contact-48CkLuEGgWU");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-}
-
-/* Upload */
-.section--upload {
-  background-image:
-    linear-gradient(rgba(15, 20, 28, 0.65), rgba(15, 20, 28, 0.65)),
-    url("https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80&w=1920&auto=format&fit=crop");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-/* Mobile: disable fixed attachment on all backgrounded sections */
-@media (max-width: 768px) {
+  /* Mobile: disable fixed backgrounds */
   .section--listings,
   .section--agents,
   .section--about,
   .section--journal,
-  .sectionContact.section--contact,
+  .section--contact,
   .section--upload {
     background-attachment: scroll;
   }
-}
-
-/* Replaces the old inline margin-top on the submit button */
-.btn--submit {
-  margin-top: 1.4rem;
 }
