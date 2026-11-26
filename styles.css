@@ -292,7 +292,6 @@ main {
 }
 .nav.is-scrolled {
   padding: 0.65rem 0;
-  box-shadow: 0 8px 30px rgba(11, 18, 32, 0.1);
 }
 .nav.is-scrolled::before {
   background: rgba(247, 244, 238, 0.86);
@@ -305,12 +304,10 @@ main {
 }
 .nav.is-scrolled .nav__mark {
   color: var(--ink);
-  border-color: var(--ink);
 }
 .nav.is-scrolled .icon-btn,
 .nav.is-scrolled .nav__burger span {
   color: var(--ink);
-
 }
 
 .nav__inner {
