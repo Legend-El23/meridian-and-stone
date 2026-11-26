@@ -1885,7 +1885,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   gap: 0.6rem;
   padding: 0.9rem 1rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(0, 0, 0, 0.522);
   font-size: 0.82rem;
   font-weight: 500;
   transition: all 0.35s var(--ease);
