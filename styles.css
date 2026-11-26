@@ -57,7 +57,7 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  color: var(--ink);
+  color: #d8a657;
   background: var(--ivory);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -149,7 +149,7 @@ main {
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 0.72rem;
-  color: var(--brass-dark);
+  color: #ffffff;
   margin-bottom: 0.9rem;
   display: inline-block;
 }
@@ -1410,7 +1410,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   margin-bottom: 1.3rem;
 }
 .about__story-copy p {
-  color: var(--sage);
+  color: white;
   margin-bottom: 1rem;
 }
 .about__signature {
@@ -1423,7 +1423,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: var(--brass-dark);
+  color: rgba(242, 190, 1, 0.768);
 }
 .about__signature strong {
   font-family: var(--font-display);
@@ -1462,7 +1462,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   text-transform: uppercase;
-  color: var(--brass-dark);
+  color: rgba(242, 190, 1, 0.768);;
   margin-top: 0.2rem;
 }
 
@@ -1501,7 +1501,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-style: italic;
-  color: var(--ink);
+  color: rgba(255, 255, 255, 0.812);
   line-height: 1.5;
 }
 .testimonial-slide strong {
@@ -1513,7 +1513,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 .testimonial-slide em {
   font-style: normal;
-  color: var(--sage);
+  color: rgba(242, 190, 1, 0.768);
   font-size: 0.8rem;
 }
 .carousel-arrow {
@@ -1583,7 +1583,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 .faq-a p {
   padding-bottom: 1.4rem;
-  color: var(--sage);
+  color: rgba(242, 190, 1, 0.768);
   font-size: 0.92rem;
 }
 
