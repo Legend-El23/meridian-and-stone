@@ -2676,4 +2676,13 @@ body:has(.compare-dock.is-visible) .back-to-top {
   margin-right: auto;
 }
 
-.view-listings { top: 20px; }
+.view-listings { top: 20px; 
+    background: linear-gradient(135deg, var(--brass-light), var(--brass-dark));
+    color: var(--ink);
+}
+
+.view-listings:hover {
+  background: linear-gradient(135deg, var(--brass-dark), var(--brass-light));
+  color: var(--ivory);
+  translate: Y(-2px);
+}
