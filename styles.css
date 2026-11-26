@@ -307,7 +307,7 @@ main {
   color: var(--ink);
   border-color: var(--ink);
 }
-.nav.is-scrolled .icon-btn,
+.nav.is-scrolled,
 .nav.is-scrolled .nav__burger span {
   color: var(--ink);
   background: var(--ink);
