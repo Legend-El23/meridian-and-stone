@@ -2561,7 +2561,11 @@ body:has(.compare-dock.is-visible) .back-to-top {
   border-color: #e63946;
 }
 
-/* Background building image for the listings section */
+/* =========================================================
+   BACKGROUND BUILDING IMAGES PER PAGE
+   ========================================================= */
+
+/* Listings */
 .section--listings {
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.55)),
@@ -2572,7 +2576,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   background-attachment: fixed;
 }
 
-/* Background building image for the agents section */
+/* Agents */
 .section--agents {
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.55)),
@@ -2583,7 +2587,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   background-attachment: fixed;
 }
 
-/* Background building image for the about section */
+/* About */
 .section--about {
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.6), rgba(15, 20, 28, 0.6)),
@@ -2594,7 +2598,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   background-attachment: fixed;
 }
 
-/* Background building image for the journal section */
+/* Journal */
 .section--journal {
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.6), rgba(15, 20, 28, 0.6)),
@@ -2605,11 +2609,12 @@ body:has(.compare-dock.is-visible) .back-to-top {
   background-attachment: fixed;
 }
 
-/* Background building image for the contact section */
+/* Contact — fixed URL (was Adobe Stock page, now a real image) */
 .sectionContact.section--contact {
+  background-color: #0f141c;
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.68), rgba(15, 20, 28, 0.68)),
-    url("https://stock.adobe.com/images/chatbot-conversation-assistant-person-using-online-customer-service-with-chat-bot-to-get-support-artificial-intelligence-and-crm-software-technology-customer-support-center-contact-us/547404496");
+    url("https://images.unsplash.com/photo-1521783988139-89397d761dcc?q=80&w=1920&auto=format&fit=crop");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2617,7 +2622,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   min-height: 100vh;
 }
 
-/* Background building image for the upload section */
+/* Upload */
 .section--upload {
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.65), rgba(15, 20, 28, 0.65)),
@@ -2626,6 +2631,18 @@ body:has(.compare-dock.is-visible) .back-to-top {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+/* Mobile: disable fixed attachment on all backgrounded sections */
+@media (max-width: 768px) {
+  .section--listings,
+  .section--agents,
+  .section--about,
+  .section--journal,
+  .sectionContact.section--contact,
+  .section--upload {
+    background-attachment: scroll;
+  }
 }
 
 /* Replaces the old inline margin-top on the submit button */
