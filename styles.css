@@ -2560,3 +2560,14 @@ body:has(.compare-dock.is-visible) .back-to-top {
   color: #e63946;
   border-color: #e63946;
 }
+
+/* Background building image for the listings section */
+.section--listings {
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.55)),
+    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
