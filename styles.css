@@ -1859,7 +1859,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   gap: 1.6rem;
 }
 .contact__card {
-  background: var(--ink);
+  background: rgba(0, 0, 0, 0.522);
   color: var(--ivory);
   padding: 1.8rem;
   border-radius: var(--radius-md);
