@@ -2611,7 +2611,6 @@ body:has(.compare-dock.is-visible) .back-to-top {
 
 /* Contact — fixed URL (was Adobe Stock page, now a real image) */
 .sectionContact.section--contact {
-  background-color: #0f141c;
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.68), rgba(15, 20, 28, 0.68)),
     url("https://unsplash.com/photos/a-wooden-table-topped-with-scrabble-tiles-spelling-contact-48CkLuEGgWU");
