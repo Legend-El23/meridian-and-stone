@@ -2675,3 +2675,5 @@ body:has(.compare-dock.is-visible) .back-to-top {
   margin-left: auto;
   margin-right: auto;
 }
+
+.view-listings { top: 20px; }
