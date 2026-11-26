@@ -1707,13 +1707,17 @@ body:has(.compare-dock.is-visible) .back-to-top {
    ========================================================= */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1.2rem;
+}
+.form-grid > .field {
+  min-width: 0;
 }
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  min-width: 0;
 }
 .field--full {
   grid-column: 1 / -1;
@@ -1732,6 +1736,9 @@ body:has(.compare-dock.is-visible) .back-to-top {
 .field input,
 .field select,
 .field textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   background: rgba(247, 244, 238, 0.06);
   border: 1px solid rgba(247, 244, 238, 0.18);
   border-radius: var(--radius-sm);
@@ -1761,6 +1768,10 @@ body:has(.compare-dock.is-visible) .back-to-top {
 .section .field select:focus,
 .section .field textarea:focus {
   border-color: var(--brass);
+}
+.field input[type="file"] {
+  max-width: 100%;
+  overflow: hidden;
 }
 .field__error {
   font-size: 0.72rem;
@@ -2607,9 +2618,6 @@ body:has(.compare-dock.is-visible) .back-to-top {
     transition: transform 0.45s var(--ease);
     z-index: 999;
     overflow-y: auto;
-        transition: transform 0.45s var(--ease);
-    z-index: 999;
-    overflow-y: auto;
   }
   .nav__links.is-open {
     transform: translateX(0);
@@ -2681,7 +2689,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   .upload-form .form-grid,
   .contact__form .form-grid,
   .form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
   }
   .field label {
