@@ -551,8 +551,8 @@
         <img src="${p.images[0]}" alt="${p.title} exterior" loading="lazy" data-seed="${p.id}-0">
         ${p.tag ? `<span class="property-card__badge">${p.tag}</span>` : ""}
         <span class="property-card__price-tag">${money(p.price)}</span>
-        <button class="property-card__fav ${isFav ? "is-active" : ""}" data-action="fav" data-id="${p.id}" aria-label="Save residence">
-          <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C.4 8.4 2 5 5.4 5c2 0 3.4 1 4.6 2.6C11.2 6 12.6 5 14.6 5 18 5 19.6 8.4 18 11.8 15.5 16.4 8 21 8 21z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        <button class="property-card__fav ${isFav ? "is-active" : ""}" data-action="fav" data-id="${p.id}" aria-label="${isFav ? "Remove from saved" : "Save residence"}" aria-pressed="${isFav}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.2C.4 8.4 2 5 5.4 5c2 0 3.4 1 4.6 2.6C11.2 6 12.6 5 14.6 5 18 5 19.6 8.4 18 11.8 15.5 16.4 8 21 8 21z"/></svg>
         </button>
       </div>
       <div class="property-card__body">
@@ -719,11 +719,15 @@
     if (favCount) favCount.textContent = state.favorites.length;
     qsa(".property-card").forEach((card) => {
       const btn = qs('[data-action="fav"]', card);
-      if (btn)
-        btn.classList.toggle(
-          "is-active",
-          state.favorites.includes(card.dataset.id),
+      if (btn) {
+        const active = state.favorites.includes(card.dataset.id);
+        btn.classList.toggle("is-active", active);
+        btn.setAttribute("aria-pressed", active);
+        btn.setAttribute(
+          "aria-label",
+          active ? "Remove from saved" : "Save residence",
         );
+      }
     });
     if (state.currentModalId) updateModalActionButtons(state.currentModalId);
     renderFavModal();
@@ -867,7 +871,7 @@
       <iframe class="pm-map" src="${mapEmbed(p.lat)}" loading="lazy" title="Map of ${p.title}"></iframe>
       <div class="pm-actions">
         <button class="btn btn--brass" id="pmBookBtn">Book a Private Viewing</button>
-        <button class="btn btn--ghost" id="pmFavBtn">${state.favorites.includes(p.id) ? "Remove Favorite" : "Save to Favorites"}</button>
+        <button class="btn btn--ghost ${state.favorites.includes(p.id) ? "is-active" : ""}" id="pmFavBtn">${state.favorites.includes(p.id) ? "♥ Remove Favorite" : "♡ Save to Favorites"}</button>
         <button class="btn btn--outline" id="pmCompareBtn">${state.compare.includes(p.id) ? "Remove from Compare" : "Add to Compare"}</button>
       </div>
     `;
@@ -917,10 +921,11 @@
     const p = getProperty(id);
     if (!p) return;
     const favBtn = qs("#pmFavBtn");
-    if (favBtn)
-      favBtn.textContent = state.favorites.includes(p.id)
-        ? "Remove Favorite"
-        : "Save to Favorites";
+    if (favBtn) {
+      const active = state.favorites.includes(p.id);
+      favBtn.textContent = active ? "♥ Remove Favorite" : "♡ Save to Favorites";
+      favBtn.classList.toggle("is-active", active);
+    }
     const compareBtn = qs("#pmCompareBtn");
     if (compareBtn)
       compareBtn.textContent = state.compare.includes(p.id)
