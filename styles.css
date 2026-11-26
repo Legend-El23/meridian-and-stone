@@ -2606,14 +2606,15 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 
 /* Background building image for the contact section */
-.section--contact {
+.sectionContact.section--contact {
   background-image:
     linear-gradient(rgba(15, 20, 28, 0.68), rgba(15, 20, 28, 0.68)),
-    url("https://images.unsplash.com/photo-1521783988139-89397d761dcc?q=80&w=1920&auto=format&fit=crophttps://tnu.edu.eg/EN/contact.aspx");
+    url("https://images.unsplash.com/photo-1521783988139-89397d761dcc?q=80&w=1920&auto=format&fit=crop");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-height: 100vh;
 }
 
 /* Background building image for the upload section */
