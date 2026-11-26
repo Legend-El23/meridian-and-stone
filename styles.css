@@ -827,7 +827,7 @@ main {
 }
 .section__lede {
   margin-top: 0.8rem;
-  color: var(--sage);
+  color:#d8a657;;
   font-size: 0.95rem;
 }
 
@@ -1730,7 +1730,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 .section .field label,
 .contact .field label {
-  color: var(--brass-dark);
+  color: rgba(242, 190, 1, 0.768);
 }
 .field input,
 .field select,
