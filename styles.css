@@ -310,6 +310,7 @@ main {
 .nav.is-scrolled .icon-btn,
 .nav.is-scrolled .nav__burger span {
   color: var(--ink);
+
 }
 
 .nav__inner {
@@ -1655,7 +1656,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 4rem;
-  background: var(--ink);
+  background: rgba(0, 0, 0, 0.522);
   color: var(--ivory);
   border-radius: var(--radius-lg);
   max-width: 1360px;
@@ -1664,7 +1665,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 .booking__copy h2 {
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  color: var(--ivory);
+  color: #d8a657;;
   margin-bottom: 1rem;
 }
 .booking__copy p {
@@ -2641,7 +2642,39 @@ body:has(.compare-dock.is-visible) .back-to-top {
   .section--about,
   .section--journal,
   .section--contact,
-  .section--upload {
+  .section--upload,
+  .section--booking {
     background-attachment: scroll;
   }
+}
+
+/* =========================================================
+   BOOKING PAGE — BACKGROUND
+   ========================================================= */
+
+/* Layout: full-bleed wrapper, content centered inside */
+.sectionBooking {
+  padding: 7rem 2rem;
+  width: 100%;
+  position: relative;
+}
+
+/* Background: only .section--booking paints the image */
+.section--booking {
+  background-color: #0f141c;
+  background-image:
+    linear-gradient(rgba(15, 20, 28, 0.72), rgba(15, 20, 28, 0.72)),
+    url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1920&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  min-height: 100vh;
+}
+
+/* Center inner content within the full-bleed section */
+.section--booking > .booking {
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
 }
