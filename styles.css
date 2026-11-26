@@ -543,6 +543,7 @@ main {
 .btn--wide {
   width: 100%;
   padding: 1.05rem;
+  top: 10px;
 }
 .btn--submit {
   margin-top: 1.4rem;
