@@ -543,6 +543,7 @@ main {
 .btn--wide {
   width: 100%;
   padding: 1.05rem;
+  top: 10px;
 }
 .btn--submit {
   margin-top: 1.4rem;
@@ -1186,6 +1187,18 @@ main {
   margin-top: 3rem;
 }
 
+.view-listings {
+  top:20px;
+  background-color: #b08d57;
+  border-radius: 5px;
+  border: none;
+}
+
+.view-listings:hover {
+  box-shadow: 0 12px 34px rgba(176, 141, 87, 0.45);
+  transform: translateY(-2px);
+}
+
 /* =========================================================
    COMPARE DOCK
    ========================================================= */
@@ -1563,6 +1576,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
   align-items: center;
   font-size: 1rem;
   font-weight: 500;
+  color: rgba(255, 255, 254, 0.8);
 }
 .faq-q .plus {
   font-size: 1.4rem;
@@ -1580,7 +1594,7 @@ body:has(.compare-dock.is-visible) .back-to-top {
 }
 .faq-a p {
   padding-bottom: 1.4rem;
-  color: rgba(242, 190, 1, 0.768);
+  color: rgba(242, 190, 1, 0.832);
   font-size: 0.92rem;
 }
 
